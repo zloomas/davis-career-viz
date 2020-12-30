@@ -4,7 +4,7 @@
 import pandas as pd
 
 #read in raw data
-wos_export = pd.read_csv("./data/savedrecs.txt", sep='\t', header=0, index_col=False, dtype={'PY':str}, usecols=['DT', 'AU', 'TI', 'SO', 'PY', 'CR', 'NR'])
+wos_export = pd.read_csv("./data/savedrecs.txt", sep='\t', header=0, index_col=False, dtype={'PY': str}, usecols=['DT', 'AU', 'TI', 'SO', 'PY', 'CR', 'NR'])
 
 #make nodes df for author-wise network
 authors = []
@@ -48,7 +48,19 @@ for entry in wos_export.index:
                     author_edges = author_edges.append(new_entry, ignore_index=True)
             ix += 1
 
+
 author_edges = author_edges[['from','to','title','journ','pub_year','doc_type']]
-author_edges.to_csv("./data/author_network_edges.tsv", sep='\t', index=False)
+#author_edges.to_csv("./data/author_network_edges.tsv", sep='\t', index=False)
+
+#ok - now instead, time to try to make an actual (tiny) citation network
+#start with list of his own papers to make some ids
+papers = [ti.upper() for ti in wos_export['TI']]
+
+paper_nodes = pd.DataFrame(columns=['paper_id', 'title'])
+
+for ti in range(len(papers)):
+    paper_id = 'pa' + str(ti+1)
+    paper_nodes = paper_nodes.append({'paper_id':paper_id, 'title':papers[ti]}, ignore_index=True)
+
 
 
