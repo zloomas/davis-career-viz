@@ -23,7 +23,7 @@ for au in range(len(authors)):
     au_id = 'au' + str(au+1)
     author_nodes = author_nodes.append({'au_id': au_id, 'au_name': authors[au]}, ignore_index=True)
 
-#author_nodes.to_csv("./data/coauthors/author_network_nodes.tsv", sep='\t', index=False)
+author_nodes.to_csv("./data/coauthors/author_network_nodes.tsv", sep='\t', index=False)
 
 #make edges df for author-wise network
 
@@ -74,7 +74,7 @@ for entry in wos_export.index:
 
     seed_paper_nodes = seed_paper_nodes.append(new_entry, ignore_index=True)
 
-seed_paper_nodes.to_csv("./data/papers/seed_paper_network_nodes.tsv", sep='\t', index=False)
+#seed_paper_nodes.to_csv("./data/papers/seed_paper_network_nodes.tsv", sep='\t', index=False)
 
 #cobble together a superset of all the papers in TC and CR exports
 path = './data/papers/citations'
@@ -111,9 +111,9 @@ for entry in full_citations.index:
         full_citations.loc[entry, 'au_name'] = au_name.upper()
 
 paper_nodes = seed_paper_nodes.append(full_citations[paper_cols])
-paper_nodes = paper_nodes.drop_duplicates(ignore_index=True)
+paper_nodes = paper_nodes.drop_duplicates(subset='paper_id', ignore_index=True)
 
-paper_nodes.to_csv('./data/papers/paper_network_nodes.tsv', sep='\t', index=False)
+#paper_nodes.to_csv('./data/papers/paper_network_nodes.tsv', sep='\t', index=False)
 
-
-
+paper_edges = full_citations[['from', 'to']]
+#paper_edges.to_csv('./data/papers/paper_network_edges.tsv', sep='\t', index=False)
