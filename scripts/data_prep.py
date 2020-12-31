@@ -62,5 +62,6 @@ for ti in range(len(papers)):
     paper_id = 'pa' + str(ti+1)
     paper_nodes = paper_nodes.append({'paper_id':paper_id, 'title':papers[ti]}, ignore_index=True)
 
+#paper_nodes.to_csv("./data/papers/seed_paper_network_nodes.tsv", sep='\t', index=False)
 
 
