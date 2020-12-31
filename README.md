@@ -17,7 +17,7 @@ davis-career-viz
 #### Initial WOS search
 As there are multiple researchers with the same or similar name (e.g., Davis, M. corresponds to a great many people), I used this search to narrow down to records that definitely belonged to the right person:
 
-`AU=(DAVIS MH OR DAVIS MARK) AND OG=(ECKERD COLL OR UNIVERSITY OF TEXAS AUSTIN OR UNIVERSITY OF TEXAS SYSTEM OR INDIANA UNIVERSITY BLOOMINGTON OR INDIANA UNIVERSITY SYSTEM OR EASTERN ILLINOIS UNIV) AND WC=(EDUCATION EDUCATIONAL RESEARCH OR PSYCHOLOGY SOCIAL OR PSYCHOLOGY MULTIDISCIPLINARY OR PSYCHOLOGY EDUCATIONAL OR PSYCHOLOGY OR BEHAVIORAL SCIENCES OR CRIMINOLOGY PENOLOGY OR PSYCHOLOGY APPLIED OR PSYCHOLOGY DEVELOPMENTAL)`
+`AU=(DAVIS MH  OR DAVIS MARK)  AND OG=(ECKERD COLL  OR UNIVERSITY OF TEXAS AUSTIN  OR INDIANA UNIVERSITY BLOOMINGTON  OR EASTERN ILLINOIS UNIV)  AND WC=(EDUCATION EDUCATIONAL RESEARCH  OR PSYCHOLOGY SOCIAL  OR PSYCHOLOGY MULTIDISCIPLINARY  OR PSYCHOLOGY EDUCATIONAL  OR PSYCHOLOGY  OR BEHAVIORAL SCIENCES  OR CRIMINOLOGY PENOLOGY  OR PSYCHOLOGY APPLIED  OR PSYCHOLOGY DEVELOPMENTAL)`
 
 Perform that search and export all records, selecting the "Full Record and Cited References" option for record content and using the tab-delimited format. It is at this path:
 
@@ -41,9 +41,9 @@ davis-career-viz
 
 #### Citation network
 
-The next project was to develop a citation network with one degree of separation from Mark's papers. I effectively took step forward (who cited those papers) and one step backwards (who did those papers cite) in citations. WOS makes this relatively simple and this is a small enough sample (N=48) that I just did this manually by clicking through each record from the initial search. From each record, I exported the results of the "Times Cited" and "Cited References" links, selecting all records and just "Author, Title, Source" content.   
+The next project was to develop a citation network with one degree of separation from Mark's papers. I effectively took step forward (who cited those papers) and one step backwards (who did those papers cite) in citations. WOS makes this relatively simple and this is a small enough sample (N=47) that I just did this manually by clicking through each record from the initial search. From each record, I exported the results of the "Times Cited" and "Cited References" links, selecting all records and just "Author, Title, Source" content.   
 
-The filename of each export follows this naming convention: id_type_savedrecs.txt. The id is the paper_id of the original paper assigned in seed_paper_network_nodes.tsv, and type is either "tc" or "cr" to indicate that it is the results of the "Times Cited" or "Cited References" export, respectively. These files can be found:
+The filename of each export follows this naming convention: id_type_savedrecs.txt. The id is the WOS ID of the original paper in seed_paper_network_nodes.tsv, and type is either "tc" or "cr" to indicate that it is the results of the "Times Cited" or "Cited References" export, respectively. These files can be found:
 
 ```bash
 davis-career-viz
