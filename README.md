@@ -51,6 +51,7 @@ davis-career-viz
         └── papers
             └── citations
                 └── id_type_savedrecs.txt
+            └── paper_network_nodes.tsv
             └── seed_paper_network_nodes.tsv
 ```
 

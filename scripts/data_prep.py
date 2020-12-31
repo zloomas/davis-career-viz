@@ -67,11 +67,40 @@ for entry in wos_export.index:
 
 #paper_nodes.to_csv("./data/papers/seed_paper_network_nodes.tsv", sep='\t', index=False)
 
+#cobble together a superset of all the papers in TC and CR exports
+path = './data/papers/citations'
+files = glob.glob(path + '/*.txt')
 
+df_list = []
+for file in files:
+    file_name = file.split('/')[-1]
+    paper_id = file_name.split('_')[0]
+    df = pd.read_csv(file, sep='\t', header=0, index_col=False, usecols=['AU', 'TI', 'SO', 'PY', 'UT'], dtype={'PY': str})
 
+    if 'tc' in file_name:
+        df['to'] = paper_id
+        df['from'] = df['UT']
+        df = df.rename(columns={'UT': 'paper_id'})
+    else:
+        df['from'] = paper_id
+        df['to'] = df['UT']
+        df = df.rename(columns={'UT': 'paper_id'})
 
+    df = df.rename(columns={'AU': 'au_name', 'TI': 'title', 'SO': 'journ', 'PY': 'pub_year'})
 
+    df_list.append(df)
 
+full_citations = pd.concat(df_list, axis=0, ignore_index=True, sort=False)
+
+for entry in full_citations.index:
+    full_citations.loc[entry, 'to'] = full_citations.loc[entry, 'to'].split(':')[-1]
+    full_citations.loc[entry, 'from'] = full_citations.loc[entry, 'from'].split(':')[-1]
+    full_citations.loc[entry, 'paper_id'] = full_citations.loc[entry, 'paper_id'].split(':')[-1]
+
+paper_nodes = paper_nodes.append(full_citations[['title', 'paper_id']])
+paper_nodes = paper_nodes.drop_duplicates(ignore_index=True)
+
+paper_nodes.to_csv('./data/papers/paper_network_nodes.tsv', sep='\t', index=False)
 
 
 
