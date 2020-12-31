@@ -55,17 +55,26 @@ author_edges = author_edges[['from', 'to', 'title', 'journ', 'pub_year', 'doc_ty
 
 #ok - now instead, time to try to make an actual (tiny) citation network
 #start with list of his own papers to get some ids - use inherent WOS IDs
+paper_cols = ['paper_id', 'title', 'journ', 'pub_year', 'au_name']
 
-paper_nodes = pd.DataFrame(columns=['paper_id', 'title'])
+seed_paper_nodes = pd.DataFrame(columns=paper_cols)
 
 for entry in wos_export.index:
     paper_id = wos_export.loc[entry, 'UT'].split(':')[-1]
     title = wos_export.loc[entry, 'TI'].upper()
-    new_entry = {'paper_id': paper_id,
-                 'title': title}
-    paper_nodes = paper_nodes.append(new_entry, ignore_index=True)
+    journ = wos_export.loc[entry, 'SO']
+    pub_year = wos_export.loc[entry, 'PY']
+    au_name = wos_export.loc[entry, 'AU'].upper()
 
-#paper_nodes.to_csv("./data/papers/seed_paper_network_nodes.tsv", sep='\t', index=False)
+    new_entry = {'paper_id': paper_id,
+                 'title': title,
+                 'journ': journ,
+                 'pub_year': pub_year,
+                 'au_name': au_name}
+
+    seed_paper_nodes = seed_paper_nodes.append(new_entry, ignore_index=True)
+
+seed_paper_nodes.to_csv("./data/papers/seed_paper_network_nodes.tsv", sep='\t', index=False)
 
 #cobble together a superset of all the papers in TC and CR exports
 path = './data/papers/citations'
@@ -96,8 +105,12 @@ for entry in full_citations.index:
     full_citations.loc[entry, 'to'] = full_citations.loc[entry, 'to'].split(':')[-1]
     full_citations.loc[entry, 'from'] = full_citations.loc[entry, 'from'].split(':')[-1]
     full_citations.loc[entry, 'paper_id'] = full_citations.loc[entry, 'paper_id'].split(':')[-1]
+    full_citations.loc[entry, 'title'] = full_citations.loc[entry, 'title'].upper()
+    au_name = full_citations.loc[entry, 'au_name']
+    if pd.notna(au_name):
+        full_citations.loc[entry, 'au_name'] = au_name.upper()
 
-paper_nodes = paper_nodes.append(full_citations[['title', 'paper_id']])
+paper_nodes = seed_paper_nodes.append(full_citations[paper_cols])
 paper_nodes = paper_nodes.drop_duplicates(ignore_index=True)
 
 paper_nodes.to_csv('./data/papers/paper_network_nodes.tsv', sep='\t', index=False)
