@@ -22,7 +22,7 @@ for au in range(len(authors)):
     au_id = 'au' + str(au+1)
     author_nodes = author_nodes.append({'au_id':au_id, 'au_name':authors[au]}, ignore_index=True)
 
-#author_nodes.to_csv("./data/author_network_nodes.tsv", sep='\t', index=False)
+#author_nodes.to_csv("./data/coauthors/author_network_nodes.tsv", sep='\t', index=False)
 
 #make edges df for author-wise network
 
@@ -50,7 +50,7 @@ for entry in wos_export.index:
 
 
 author_edges = author_edges[['from','to','title','journ','pub_year','doc_type']]
-#author_edges.to_csv("./data/author_network_edges.tsv", sep='\t', index=False)
+#author_edges.to_csv("./data/coauthors/author_network_edges.tsv", sep='\t', index=False)
 
 #ok - now instead, time to try to make an actual (tiny) citation network
 #start with list of his own papers to make some ids
