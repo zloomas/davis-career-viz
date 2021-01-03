@@ -9,6 +9,7 @@ davis-career-viz
     └── data
         └── coauthors
         └── papers
+            └── citations
     └── scripts
     └── viz
 ```
@@ -39,6 +40,8 @@ davis-career-viz
             └── author_network_nodes.tsv
 ```
 
+In this data, each node is a co-author on any of the research output from the WOS search. This includes his partner, Linda, so this provides the opportunity to show their personal relationship in context of their academic output.
+
 #### Citation network
 
 The next project was to develop a citation network with one degree of separation from Mark's papers. I effectively took step forward (who cited those papers) and one step backwards (who did those papers cite) in citations. WOS makes this relatively simple and this is a small enough sample (N=47) that I just did this manually by clicking through each record from the initial search. From each record, I exported the results of the "Times Cited" and "Cited References" links, selecting all records and just "Author, Title, Source" content.   
@@ -54,6 +57,7 @@ davis-career-viz
             └── paper_network_nodes.tsv
             └── seed_paper_network_nodes.tsv
 ```
+Note that one paper has been cited >4000 times! WOS limits the size of each records export to 500 records, so in the case of that paper there are 9 "Times Cited" files. They are named the same way, but numbered, e.g., id_type_savedrecs01.txt, id_type_savedrecs02.txt, etc.
 
 ### Scripts
 There are two main scripts for this project:
