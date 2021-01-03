@@ -54,13 +54,15 @@ ggraph(author_network, layout = "sphere") +
 paper_nodes <- read_tsv(paste0(getwd(),"/data/papers/paper_network_nodes.tsv"))
 paper_edges <- read_tsv(paste0(getwd(),"/data/papers/paper_network_edges.tsv"))
 
-
 paper_network <- graph_from_data_frame(d=paper_edges, vertices=paper_nodes, directed=T)
 
 #basic
 ggraph(paper_network, layout = "kk") +
-  geom_edge_arc(width=.1, color = "grey40", alpha = .2) +
-  geom_node_point(size = .1, color = "orange") +
-  theme_void()
+  geom_edge_arc(width=.1, color = "grey50", alpha = .2) +
+  geom_node_point(size = .1, color = "#3A7BCC") +
+  theme_void() +
+  coord_flip() +
+  scale_x_reverse()
 
-ggsave(paste0(getwd(), "/viz/citations_test.jpg"))
+#ggsave(paste0(getwd(), "/viz/citations_test.jpg"), width = 10, height = 10)
+
