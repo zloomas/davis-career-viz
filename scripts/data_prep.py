@@ -17,14 +17,14 @@ for ix in wos_export.index:
 authors = list(set(authors))
 authors.sort()
 
-mark_ix = authors.index("DAVIS, MH")
+dupe_mark_ix = authors.index("DAVIS, MH")
 
 author_nodes = pd.DataFrame(columns=['au_id', 'au_name'])
 
 for au in range(len(authors)):
-    if au < mark_ix:
+    if au < dupe_mark_ix:
         au_id = 'au' + str(au+1)
-    elif au > mark_ix:
+    elif au > dupe_mark_ix:
         au_id = 'au' + str(au)
     else:
        continue
@@ -40,21 +40,22 @@ author_edges = pd.DataFrame()
 
 for entry in wos_export.index:
 
-    au_list = wos_export.loc[entry, 'AU'].split("; ")
+    au_list = [au.upper() for au in wos_export.loc[entry, 'AU'].split("; ")]
     new_entry ={'title': wos_export.loc[entry, 'TI'],
                 'pub_year': wos_export.loc[entry, 'PY'],
                 'journ': wos_export.loc[entry, 'SO'],
                 'doc_type': wos_export.loc[entry, 'DT']}
 
-
+    if "DAVIS, MH" in au_list:
+        au_list = [au.replace("DAVIS, MH", "DAVIS, M") for au in au_list]
 
     if len(au_list) > 1:
         ix = 0
         while ix < len(au_list):
-            new_entry['from'] = nodes_dict[au_list[ix].upper()]
+            new_entry['from'] = nodes_dict[au_list[ix]]
             for au in range(len(au_list)):
                 if au > ix:
-                    new_entry['to'] = nodes_dict[au_list[au].upper()]
+                    new_entry['to'] = nodes_dict[au_list[au]]
                     author_edges = author_edges.append(new_entry, ignore_index=True)
             ix += 1
 
