@@ -67,5 +67,27 @@ davis-career-viz
         └── viz.R
 ```
 
+### Viz
+The output of `viz.R` is saved in the viz folder. Right now, there are just a few plots, mocked up so that Mark and his partner can see what they look like to start and refine them for their own aesthetic.
+
+```bash
+davis-career-viz
+    └── viz
+        └── citations_test.jpg
+        └── coauthors_ml_diff.jpg
+        └── coauthors_ml_same.jpg
+        └── coauthors_test.jpg
+```
+These are included in this README for ease of access.
+
+![citations_test.jpg](./viz/citations_test.jpg)
+
+![citations_test.jpg](./viz/coauthors_ml_diff.jpg)
+
+![citations_test.jpg](./viz/coauthors_ml_same.jpg)
+
+![citations_test.jpg](./viz/coauthors_test.jpg)
+
+
 ### References
 Ognyanova, K. (2019) Network visualization with R. Retrieved from www.kateto.net/network-visualization.
