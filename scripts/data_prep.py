@@ -17,13 +17,20 @@ for ix in wos_export.index:
 authors = list(set(authors))
 authors.sort()
 
+mark_ix = authors.index("DAVIS, MH")
+
 author_nodes = pd.DataFrame(columns=['au_id', 'au_name'])
 
 for au in range(len(authors)):
-    au_id = 'au' + str(au+1)
+    if au < mark_ix:
+        au_id = 'au' + str(au+1)
+    elif au > mark_ix:
+        au_id = 'au' + str(au)
+    else:
+       continue
     author_nodes = author_nodes.append({'au_id': au_id, 'au_name': authors[au]}, ignore_index=True)
 
-author_nodes.to_csv("./data/coauthors/author_network_nodes.tsv", sep='\t', index=False)
+#author_nodes.to_csv("./data/coauthors/author_network_nodes.tsv", sep='\t', index=False)
 
 #make edges df for author-wise network
 
@@ -38,6 +45,8 @@ for entry in wos_export.index:
                 'pub_year': wos_export.loc[entry, 'PY'],
                 'journ': wos_export.loc[entry, 'SO'],
                 'doc_type': wos_export.loc[entry, 'DT']}
+
+
 
     if len(au_list) > 1:
         ix = 0
