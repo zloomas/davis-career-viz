@@ -96,7 +96,7 @@ for file in files:
     paper_id = file_name.split('_')[0]
     df = pd.read_csv(file, sep='\t', header=0, index_col=False, usecols=['AU', 'TI', 'SO', 'PY', 'UT'], dtype={'PY': str})
 
-    if 'tc' in file_name:
+    if 'cr' in file_name:
         df['to'] = paper_id
         df['from'] = df['UT']
         df = df.rename(columns={'UT': 'paper_id'})
