@@ -92,6 +92,10 @@ These are included in this README for ease of access.
 
 ![citations_test.jpg](./viz/coauthors_test.jpg)
 
+Here are some preset color palettes to help guide the development of these into a print-worthy version.
+
+![color_brewer_palettes.png](./viz/color_brewer_palettes.png)
+
 
 ### References
 Ognyanova, K. (2019) Network visualization with R. Retrieved from www.kateto.net/network-visualization.
