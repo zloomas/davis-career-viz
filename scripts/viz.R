@@ -51,8 +51,16 @@ ggraph(author_network, layout = "sphere") +
 #ggsave(paste0(getwd(), "/viz/coauthors_ml_same.jpg"), width = 5, height = 5)
 
 ## citation network
-paper_nodes <- read_tsv(paste0(getwd(),"/data/papers/paper_network_nodes.tsv"))
-paper_edges <- read_tsv(paste0(getwd(),"/data/papers/paper_network_edges.tsv"))
+mark_papers <- read_tsv(paste0(getwd(), "/data/papers/seed_paper_network_nodes.tsv"))
+mark_papers_list <- mark_papers$paper_id
+
+paper_nodes <- read_tsv(paste0(getwd(),"/data/papers/paper_network_nodes.tsv")) %>%
+  mutate(is_mark = ifelse(paper_id %in% mark_papers_list, TRUE, FALSE))
+
+paper_edges <- read_tsv(paste0(getwd(),"/data/papers/paper_network_edges.tsv")) %>%
+  mutate(citation_type = case_when(to %in% mark_papers_list & !(from %in% mark_papers_list) ~ "cited_by_mark",
+                                   from %in% mark_papers_list & !(to %in% mark_papers_list) ~ "cites_mark",
+                                   to %in% mark_papers_list & from %in% mark_papers_list ~ "self-cite"))
 
 paper_network <- graph_from_data_frame(d=paper_edges, vertices=paper_nodes, directed=T)
 
@@ -65,4 +73,17 @@ ggraph(paper_network, layout = "kk") +
   scale_x_reverse()
 
 #ggsave(paste0(getwd(), "/viz/citations_test.jpg"), width = 10, height = 10)
+
+#first pass at color
+#nodes by whether Mark is an author or not
+#edges by whether he cites it, is self-citing, or it cites him
+ggraph(paper_network, layout = "kk") +
+  geom_edge_arc(width=.1, alpha = .2, aes(color = citation_type), show.legend = FALSE) +
+  scale_edge_color_manual(values = c("#2B929E", "#9E2B5F", "#9E832B")) +
+  geom_node_point(aes(color = is_mark, size = is_mark), show.legend = FALSE) +
+  scale_color_manual(values = c("grey30", "black")) +
+  scale_size_manual(values = c(.1, .5)) +
+  theme_void() +
+  coord_flip() +
+  scale_x_reverse()
 
