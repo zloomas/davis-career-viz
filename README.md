@@ -92,6 +92,14 @@ These are included in this README for ease of access.
 
 ![citations_test.jpg](./viz/coauthors_test.jpg)
 
+![citations_test.jpg](./viz/citations_green.jpg)
+
+![citations_test.jpg](./viz/coauthors_green_nodes_grey40.jpg)
+
+![citations_test.jpg](./viz/coauthors_green_nodes_grey80.jpg)
+
+![citations_test.jpg](./viz/coauthors_green_theme.jpg)
+
 Here are some preset color palettes to help guide the development of these into a print-worthy version.
 
 ![color_brewer_palettes.png](./viz/color_brewer_palettes.png)
