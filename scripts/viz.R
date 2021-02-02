@@ -28,6 +28,32 @@ ggraph(author_network, layout = "sphere") +
 
 #ggsave(paste0(getwd(), "/viz/coauthors_test.jpg"), width = 5, height = 5)
 
+## green tests
+## nodes w/ darker grey
+ggraph(author_network, layout = "sphere") +
+  geom_edge_arc(color = "grey40", width=.3, show.legend = FALSE) +
+  geom_node_point(color = "#A5D468", size = 2, show.legend = FALSE) +
+  theme_void()
+
+ggsave(paste0(getwd(), "/viz/coauthors_green_nodes_grey40.jpg"), width = 5, height = 5)
+
+## nodes w/ lighter grey
+ggraph(author_network, layout = "sphere") +
+  geom_edge_arc(color = "grey80", width=.3, show.legend = FALSE) +
+  geom_node_point(color = "#A5D468", size = 1, show.legend = FALSE) +
+  theme_void()
+
+#ggsave(paste0(getwd(), "/viz/coauthors_green_nodes_grey80.jpg"), width = 5, height = 5)
+
+## green everything
+ggraph(author_network, layout = "sphere") +
+  geom_edge_arc(color = "#A5D468", width=.3, show.legend = FALSE) +
+  geom_node_point(color = "#A2BB81", size = 1, show.legend = FALSE) +
+  theme_void()
+
+#ggsave(paste0(getwd(), "/viz/coauthors_green_theme.jpg"), width = 5, height = 5)
+
+
 ## diff colored m+l
 ggraph(author_network, layout = "sphere") +
   geom_edge_arc(aes(colour = is_ml, alpha = is_ml), width=.3, show.legend = FALSE) +
@@ -86,4 +112,14 @@ ggraph(paper_network, layout = "kk") +
   theme_void() +
   coord_flip() +
   scale_x_reverse()
+
+## green test
+ggraph(paper_network, layout = "kk") +
+  geom_edge_arc(width=.1, color = "#8A9396", alpha = .2) +
+  geom_node_point(size = .1, color = "#A2BB81") +
+  theme_void() +
+  coord_flip() +
+  scale_x_reverse()
+
+#ggsave(paste0(getwd(), "/viz/citations_green.jpg"), width = 10, height = 10)
 
