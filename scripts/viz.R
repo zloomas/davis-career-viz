@@ -114,6 +114,8 @@ ggraph(paper_network, layout = "kk") +
   coord_flip() +
   scale_x_reverse()
 
+# ggsave(here("viz","citations_pink.jpg"), width = 10, height = 10)
+
 ## green test
 ggraph(paper_network, layout = "kk") +
   geom_edge_arc(width=.1, color = "#8A9396", alpha = .2) +
