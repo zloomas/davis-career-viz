@@ -6,14 +6,15 @@ library(ggraph)
 library(ggplot2)
 library(readr)
 library(dplyr)
+library(here)
 
 ## author network
-author_nodes <- read_tsv(paste0(getwd(),"/data/coauthors/author_network_nodes.tsv")) %>%
+author_nodes <- read_tsv(here("data","coauthors","author_network_nodes.tsv")) %>%
   mutate(ml_id = case_when(au_id == "au29" ~ "linda",
                            au_id == "au14" ~ "mark",
                            TRUE ~ "not_ml"))
 
-author_edges <- read_tsv(paste0(getwd(),"/data/coauthors/author_network_edges.tsv")) %>%
+author_edges <- read_tsv(here("data","coauthors","author_network_edges.tsv")) %>%
   mutate(is_ml = case_when(from == "au29" & to == "au14" ~ "lb4m",
                            to == "au29" & from == "au14" ~ "mb4l",
                            TRUE ~ "not_ml"))
@@ -26,7 +27,7 @@ ggraph(author_network, layout = "sphere") +
   geom_node_point(color = "grey30", size = 1, show.legend = FALSE) +
   theme_void()
 
-#ggsave(paste0(getwd(), "/viz/coauthors_test.jpg"), width = 5, height = 5)
+#ggsave(here("viz","coauthors_test.jpg"), width = 5, height = 5)
 
 ## green tests
 ## nodes w/ darker grey
@@ -35,7 +36,7 @@ ggraph(author_network, layout = "sphere") +
   geom_node_point(color = "#A5D468", size = 2, show.legend = FALSE) +
   theme_void()
 
-ggsave(paste0(getwd(), "/viz/coauthors_green_nodes_grey40.jpg"), width = 5, height = 5)
+#ggsave(here("viz","coauthors_green_nodes_grey40.jpg"), width = 5, height = 5)
 
 ## nodes w/ lighter grey
 ggraph(author_network, layout = "sphere") +
@@ -43,7 +44,7 @@ ggraph(author_network, layout = "sphere") +
   geom_node_point(color = "#A5D468", size = 1, show.legend = FALSE) +
   theme_void()
 
-#ggsave(paste0(getwd(), "/viz/coauthors_green_nodes_grey80.jpg"), width = 5, height = 5)
+#ggsave(here("viz","coauthors_green_nodes_grey80.jpg"), width = 5, height = 5)
 
 ## green everything
 ggraph(author_network, layout = "sphere") +
@@ -51,7 +52,7 @@ ggraph(author_network, layout = "sphere") +
   geom_node_point(color = "#A2BB81", size = 1, show.legend = FALSE) +
   theme_void()
 
-#ggsave(paste0(getwd(), "/viz/coauthors_green_theme.jpg"), width = 5, height = 5)
+#ggsave(here("viz","coauthors_green_theme.jpg"), width = 5, height = 5)
 
 
 ## diff colored m+l
@@ -63,7 +64,7 @@ ggraph(author_network, layout = "sphere") +
   scale_color_manual(values = c("#9E2B5F", "#2B5F9E", "grey40")) +
   theme_void()
 
-#ggsave(paste0(getwd(), "/viz/coauthors_ml_diff.jpg"), width = 5, height = 5)
+#ggsave(here("viz","coauthors_ml_diff.jpg"), width = 5, height = 5)
 
 ## same colored m+l
 ggraph(author_network, layout = "sphere") +
@@ -74,16 +75,16 @@ ggraph(author_network, layout = "sphere") +
   scale_color_manual(values = c("#9E2B5F", "#9E2B5F", "grey40")) +
   theme_void()
 
-#ggsave(paste0(getwd(), "/viz/coauthors_ml_same.jpg"), width = 5, height = 5)
+#ggsave(here("viz","coauthors_ml_same.jpg"), width = 5, height = 5)
 
 ## citation network
-mark_papers <- read_tsv(paste0(getwd(), "/data/papers/seed_paper_network_nodes.tsv"))
+mark_papers <- read_tsv(here("data","papers","seed_paper_network_nodes.tsv"))
 mark_papers_list <- mark_papers$paper_id
 
-paper_nodes <- read_tsv(paste0(getwd(),"/data/papers/paper_network_nodes.tsv")) %>%
+paper_nodes <- read_tsv(here("data","papers","paper_network_nodes.tsv")) %>%
   mutate(is_mark = ifelse(paper_id %in% mark_papers_list, TRUE, FALSE))
 
-paper_edges <- read_tsv(paste0(getwd(),"/data/papers/paper_network_edges.tsv")) %>%
+paper_edges <- read_tsv(here("data","papers","paper_network_edges.tsv")) %>%
   mutate(citation_type = case_when(to %in% mark_papers_list & !(from %in% mark_papers_list) ~ "cited_by_mark",
                                    from %in% mark_papers_list & !(to %in% mark_papers_list) ~ "cites_mark",
                                    to %in% mark_papers_list & from %in% mark_papers_list ~ "self-cite"))
@@ -98,7 +99,7 @@ ggraph(paper_network, layout = "kk") +
   coord_flip() +
   scale_x_reverse()
 
-#ggsave(paste0(getwd(), "/viz/citations_test.jpg"), width = 10, height = 10)
+#ggsave(here("viz","citations_test.jpg"), width = 10, height = 10)
 
 #first pass at color
 #nodes by whether Mark is an author or not
@@ -121,5 +122,5 @@ ggraph(paper_network, layout = "kk") +
   coord_flip() +
   scale_x_reverse()
 
-#ggsave(paste0(getwd(), "/viz/citations_green.jpg"), width = 10, height = 10)
+#ggsave(here("viz","citations_green.jpg"), width = 10, height = 10)
 
