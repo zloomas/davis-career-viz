@@ -1,15 +1,13 @@
 ## Visualizing the career of Mark Davis
 
-This project is a Christmas present for a family friend who retired this year from his career as an academic. It relies on data from [Web of Science](https://www.webofknowledge.com) to create a few visualizations to characterize different features of his research. The primary output is a print of one such visualization for Mark and his partner to display in their home, but I would also like to eventually make this into a Shiny webapp so that the other plots can be displayed and shared.
+![final_viz](Rplot.jpeg)
+
+This project is a Christmas present for a family friend who retired in 2020 from his career as an academic. It relies on data from [Web of Science](https://www.webofknowledge.com) to create a few visualizations to characterize different features of his research. The primary output was a print of the above visualization for Mark and his partner to display in their home.
 
 The current directory structure of this repository is:
 
 ```bash
 davis-career-viz
-    └── data
-        └── coauthors
-        └── papers
-            └── citations
     └── scripts
     └── viz
 ```
@@ -20,17 +18,11 @@ As there are multiple researchers with the same or similar name (e.g., Davis, M.
 
 `AU=(DAVIS MH  OR DAVIS MARK)  AND OG=(ECKERD COLL  OR UNIVERSITY OF TEXAS AUSTIN  OR INDIANA UNIVERSITY BLOOMINGTON  OR EASTERN ILLINOIS UNIV)  AND WC=(EDUCATION EDUCATIONAL RESEARCH  OR PSYCHOLOGY SOCIAL  OR PSYCHOLOGY MULTIDISCIPLINARY  OR PSYCHOLOGY EDUCATIONAL  OR PSYCHOLOGY  OR BEHAVIORAL SCIENCES  OR CRIMINOLOGY PENOLOGY  OR PSYCHOLOGY APPLIED  OR PSYCHOLOGY DEVELOPMENTAL)`
 
-Perform that search and export all records, selecting the "Full Record and Cited References" option for record content and using the tab-delimited format. It is at this path:
-
-```bash
-davis-career-viz
-    └── data
-        └── savedrecs.txt
-```
+Perform that search and export all records, selecting the "Full Record and Cited References" option for record content and using the tab-delimited format. 
 
 #### Co-author network
 
-The raw data file is used as input for data_prep.py to develop the node and edge datasets used for the network visualization of his co-authors, both of which can be found on this repository.
+The raw data file is used as input for data_prep.py to develop the node and edge datasets used for the network visualization of his co-authors, both of which will be produced in this location:
 
 ```bash
 davis-career-viz
@@ -46,7 +38,7 @@ In this data, each node is a co-author on any of the research output from the WO
 
 The next project was to develop a citation network with one degree of separation from Mark's papers. I effectively took step forward (who cited those papers) and one step backwards (who did those papers cite) in citations. WOS makes this relatively simple and this is a small enough sample (N=47) that I just did this manually by clicking through each record from the initial search. From each record, I exported the results of the "Times Cited" and "Cited References" links, selecting all records and just "Author, Title, Source" content.   
 
-The filename of each export follows this naming convention: id_type_savedrecs.txt. The id is the WOS ID of the original paper in seed_paper_network_nodes.tsv, and type is either "tc" or "cr" to indicate that it is the results of the "Times Cited" or "Cited References" export, respectively. These files can be found:
+The filename of each export follows this naming convention: id_type_savedrecs.txt. The id is the WOS ID of the original paper in seed_paper_network_nodes.tsv, and type is either "tc" or "cr" to indicate that it is the results of the "Times Cited" or "Cited References" export, respectively. These files should be organized as:
 
 ```bash
 davis-career-viz
@@ -72,7 +64,7 @@ davis-career-viz
 ```
 
 ### Viz
-The output of `viz.R` is saved in the viz folder. Right now, there are just a few plots, mocked up so that Mark and his partner can see what they look like to start and refine them for their own aesthetic.
+The output of `viz.R` is saved in the viz folder.
 
 ```bash
 davis-career-viz
